@@ -8,7 +8,22 @@
       <%= submit_tag 'Search', :name => nil %>
     </p>
     <div id="entities">
-      <%= render('entities') %>
+      <%= hidden_field_tag :direction, params[:direction] %>
+      <%= hidden_field_tag :sort, params[:sort] %>
+      <%= will_paginate @entities, previous_label: '<', next_label: '>' %>
+
+      <table>
+        <thead>
+        <tr>
+          <th><%= sortable 'name' %></th>
+          <th><%= sortable 'price' %></th>
+          <th colspan="3"></th>
+        </tr>
+        </thead>
+        <tbody>
+          <%= render('entities') %>
+        </tbody>
+      </table>
     </div>
 <% end %>
 

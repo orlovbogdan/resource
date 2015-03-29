@@ -4,7 +4,10 @@
 
 
 .pagination {
-  display: inline-block; //!
+  //display: inline-block; //!
+  position: fixed;
+  right: 30px;
+  top: 20px;
 
   background: white;
   cursor: default;
