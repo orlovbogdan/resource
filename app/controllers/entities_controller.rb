@@ -1,10 +1,10 @@
 class EntitiesController < ApplicationController
   before_action :set_entity, only: [:show, :edit, :update, :destroy]
-
+  helper_method :sort_column, :sort_direction
   # GET /entities
   # GET /entities.json
   def index
-    @entities = Entity.all.page(params[:page]).per_page(2)
+    @entities = Entity.all.page(params[:page]).per_page(2).order(sort_column + ' ' + sort_direction)
   end
 
   # GET /entities/1
@@ -71,4 +71,15 @@ class EntitiesController < ApplicationController
     def entity_params
       params.require(:entity).permit(:name, :price)
     end
+
+
+
+    def sort_column
+      Entity.column_names.include?(params[:sort]) ? params[:sort] : 'name'
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+    end
+
 end

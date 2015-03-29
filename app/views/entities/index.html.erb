@@ -2,37 +2,9 @@
 
 <h1>Listing Entities</h1>
 
-<%#= will_paginate @entities, previous_label: '<', next_label: '>' %>
-
-<% if @entities.previous_page %>
-    <%= link_to '< Previous', params.merge(page: @entities.previous_page) %>
-<% end %>
-Page <%= @entities.current_page %> of <%= @entities.total_pages %>
-<% if @entities.next_page %>
-    <%= link_to 'Next >', params.merge(page: @entities.next_page) %>
-<% end %>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @entities.each do |entity| %>
-      <tr>
-        <td><%= entity.name %></td>
-        <td><%= entity.price %></td>
-        <td><%= link_to 'Show', entity %></td>
-        <td><%= link_to 'Edit', edit_entity_path(entity) %></td>
-        <td><%= link_to 'Destroy', entity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div id="entities">
+<%= render('entities') %>
+</div>
 
 <br>
 
