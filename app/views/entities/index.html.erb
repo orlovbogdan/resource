@@ -2,9 +2,16 @@
 
 <h1>Listing Entities</h1>
 
-<div id="entities">
-<%= render('entities') %>
-</div>
+<%= form_tag entities_path, :method => 'get', :id => 'entities_search' do %>
+    <p>
+      <%= text_field_tag :search, params[:search] %>
+      <%= submit_tag 'Search', :name => nil %>
+    </p>
+    <div id="entities">
+      <%= render('entities') %>
+    </div>
+<% end %>
+
 
 <br>
 

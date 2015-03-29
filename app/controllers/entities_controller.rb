@@ -4,7 +4,7 @@ class EntitiesController < ApplicationController
   # GET /entities
   # GET /entities.json
   def index
-    @entities = Entity.all.page(params[:page]).per_page(2).order(sort_column + ' ' + sort_direction)
+    @entities = Entity.all.search(params[:search]).order(sort_column + ' ' + sort_direction).page(params[:page]).per_page(2)
   end
 
   # GET /entities/1
