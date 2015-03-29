@@ -1,1 +1,2 @@
 $("#entities").html("<%= j(render('entities')) %>");
+document.title = "<%= j("#{params[:search].to_s.titleize} Entities by #{(params[:sort] || 'name').titleize} - Page #{params[:page] || 1}") %>";
