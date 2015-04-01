@@ -1,13 +1,21 @@
-if ($("#entities [id^=page]").last().data('page') == '<%= @entities.previous_page %>') {
-    $("#entities tbody").append("<%= j(render('entities')) %>");
-} else {
-    if (jQuery.inArray($('[data-page=<%= @entities.current_page %>]')[0], $("#entities [id^=page]"))>=0) {
-        $('html, body').animate({
-            scrollTop: $('#page<%= @entities.current_page %>').offset().top
-        }, 500);
-    } else {
-        $("#entities tbody").html("<%= j(render('entities')) %>");
+if (<%=params[:after].present? %>) {
+    if (<%= sort_column == 'created_at' && sort_direction == 'desc' %> && $('#page1').length) {
+        $("#entities tbody").prepend("<%= j(render('entities')) %>");
     }
+    setTimeout(updateEntities, 10000);
+} else {
+    if ($("#entities [id^=page]").last().data('page') == '<%= @entities.previous_page %>') {
+        $("#entities tbody").append("<%= j(render('entities')) %>");
+    } else {
+        if (jQuery.inArray($('[data-page=<%= @entities.current_page %>]')[0], $("#entities [id^=page]")) >= 0) {
+            $('html, body').animate({
+                scrollTop: $('#page<%= @entities.current_page %>').offset().top
+            }, 500);
+        } else {
+            $("#entities tbody").html("<%= j(render('entities')) %>");
+        }
+    }
+    document.title = "<%= j("#{params[:search].to_s.titleize} Entities by #{(params[:sort] || 'name').titleize} - Page #{params[:page] || 1}") %>";
+    $('.pagination').replaceWith('<%= j will_paginate(@entities) %>');
+
 }
-document.title = "<%= j("#{params[:search].to_s.titleize} Entities by #{(params[:sort] || 'name').titleize} - Page #{params[:page] || 1}") %>";
-$('.pagination').replaceWith('<%= j will_paginate(@entities) %>');

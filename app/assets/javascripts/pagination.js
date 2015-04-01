@@ -22,7 +22,19 @@ $(function() {
         $.getScript(url);
       }
     });
+
+  setTimeout(updateEntities, 10000);
+
   }
 
 
 });
+
+function updateEntities() {
+  if ($("#entities table tbody tr").length > 0) {
+    var after = $("#entities table tbody tr").first().data('time');
+  } else {
+    var after = "0";
+  }
+  $.getScript($("#entities_search").attr("action") + "?after=" + after)
+}

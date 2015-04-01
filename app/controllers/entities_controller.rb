@@ -4,7 +4,7 @@ class EntitiesController < ApplicationController
   # GET /entities
   # GET /entities.json
   def index
-    @entities = Entity.all.search(params[:search]).order(sort_column + ' ' + sort_direction).page(params[:page]).per_page(25)
+    @entities = Entity.where('created_at > ?', Time.at(params[:after] ? Time.parse(params[:after]).to_i + 1 : 0)).search(params[:search]).order(sort_column + ' ' + sort_direction).page(params[:page]).per_page(25)
   end
 
   # GET /entities/1
@@ -75,11 +75,11 @@ class EntitiesController < ApplicationController
 
 
     def sort_column
-      Entity.column_names.include?(params[:sort]) ? params[:sort] : 'name'
+      Entity.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
     end
 
     def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
     end
 
 end
